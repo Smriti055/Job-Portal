@@ -1,15 +1,14 @@
-import React, { useState } from 'react'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
-import { Label } from './ui/label'
-import { Input } from './ui/input'
-import { Button } from './ui/button'
-import { Loader2 } from 'lucide-react'
-import { useDispatch, useSelector } from 'react-redux'
-import { setUser } from '@/redux/authSlice'
-import { toast } from 'sonner'
-import axios from 'axios'
-import { USER_API_END_POINT } from '../utils/constant.js'; // Adjust the path accordingly
-
+import React, { useState } from 'react';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog';
+import { Label } from './ui/label';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import { Loader2 } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '@/redux/authSlice';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { USER_API_END_POINT } from '../utils/constant.js'; 
 
 const UpdateProfileDialogue = ({ open, setOpen }) => {
   const [loading, setLoading] = useState(false);
@@ -70,95 +69,109 @@ const UpdateProfileDialogue = ({ open, setOpen }) => {
       console.log(error);
       const message = error.response?.data?.message || 'An error occurred'; // Safely access error message
       toast.error(message);
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
     setOpen(false);
-    console.log(input);
   };
 
   return (
-    <div>
-      <Dialog open={open}>
-        <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
-          <DialogHeader>
-            <DialogTitle>Update Profile</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={submitHandler}>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className='text-right'>Name</Label>
-                <Input
-                  id='name'
-                  name='name'
-                  value={input.fullname}
-                  onChange={changeEventHandler}
-                  className='col-span-3' />
-              </div>
-
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="email" className='text-right'>Email</Label>
-                <Input
-                  id='email'
-                  name='email'
-                  value={input.email}
-                  onChange={changeEventHandler}
-                  className='col-span-3' />
-              </div>
-
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="number" className='text-right'>Number</Label>
-                <Input
-                  id='number'
-                  name='number'
-                  value={input.phoneNumber}
-                  onChange={changeEventHandler}
-                  className='col-span-3' />
-              </div>
-
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="bio" className='text-right'>Bio</Label>
-                <Input
-                  id='bio'
-                  name='bio'
-                  value={input.bio}
-                  onChange={changeEventHandler}
-                  className='col-span-3' />
-              </div>
-
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="skills" className='text-right'>Skills</Label>
-                <Input
-                  id='skills'
-                  name='skills'
-                  value={input.skills}
-                  onChange={changeEventHandler}
-                  className='col-span-3' />
-              </div>
-
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="file" className='text-right'>Resume</Label>
-                <Input
-                  id='file'
-                  name='file'
-                  type="file"
-                  onChange={fileChangeHandler}
-                  accept='application/pdf'
-                  className='col-span-3' />
-              </div>
+    <Dialog open={open}>
+      <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
+        <DialogHeader>
+          <DialogTitle>Update Profile</DialogTitle>
+        </DialogHeader>
+        <form onSubmit={submitHandler}>
+          <div className="grid gap-4 py-4">
+            {/* Name Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="fullname" className='text-right'>Name</Label>
+              <Input
+                id='fullname'
+                name='fullname'
+                value={input.fullname}
+                onChange={changeEventHandler}
+                placeholder="Enter your full name"
+                className='col-span-3' />
             </div>
 
-            <DialogFooter>
-              {
-                loading ? <Button className="w-full my-4"><Loader2 className='mr-2 h-4 w-4 animate-spin' />Please wait</Button> : <Button type="submit" className='w-full my-4'>Update</Button>
-              }
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-    </div>
-  )
+            {/* Email Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="email" className='text-right'>Email</Label>
+              <Input
+                id='email'
+                name='email'
+                type="email"
+                value={input.email}
+                onChange={changeEventHandler}
+                placeholder="Enter your email address"
+                className='col-span-3' />
+            </div>
+
+            {/* Phone Number Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="phoneNumber" className='text-right'>Phone Number</Label>
+              <Input
+                id='phoneNumber'
+                name='phoneNumber'
+                type="tel"
+                value={input.phoneNumber}
+                onChange={changeEventHandler}
+                placeholder="Enter your phone number"
+                className='col-span-3' />
+            </div>
+
+            {/* Bio Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="bio" className='text-right'>Bio</Label>
+              <Input
+                id='bio'
+                name='bio'
+                value={input.bio}
+                onChange={changeEventHandler}
+                placeholder="Tell us about yourself"
+                className='col-span-3' />
+            </div>
+
+            {/* Skills Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="skills" className='text-right'>Skills</Label>
+              <Input
+                id='skills'
+                name='skills'
+                value={input.skills}
+                onChange={changeEventHandler}
+                placeholder="List your skills"
+                className='col-span-3' />
+            </div>
+
+            {/* Resume File Upload */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="file" className='text-right'>Resume</Label>
+              <Input
+                id='file'
+                name='file'
+                type="file"
+                onChange={fileChangeHandler}
+                accept='.pdf'
+                className='col-span-3' />
+            </div>
+          </div>
+
+          <DialogFooter>
+            {
+              loading ? 
+                <Button className="w-full my-4" disabled>
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' />
+                  Please wait...
+                </Button> : 
+                <Button type="submit" className='w-full my-4'>Update</Button>
+            }
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 export default UpdateProfileDialogue;
